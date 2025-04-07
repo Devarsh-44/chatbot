@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: hamilton-chatbot
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn app:app
