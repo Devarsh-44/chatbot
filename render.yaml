@@ -1,7 +1,15 @@
 services:
   - type: web
-    name: hamilton-chatbot
+    name: f1-strategy-simulator
     env: python
-    plan: free
-    buildCommand: ""
-    startCommand: gunicorn app:app
+    region: oregon # Choose a region close to you (e.g., oregon, ohio, frankfurt, singapore)
+    plan: free # Use the free tier for now
+    buildCommand: "pip install --upgrade pip setuptools wheel && pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11 # Use Python 3.11 to avoid the distutils issue
+      - key: PYTHONUNBUFFERED
+        value: 1 # Ensures logs are streamed in real-time
+      - key: API_KEY
+        sync: false # We'll set this manually in the Render dashboard
