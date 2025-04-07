@@ -4,9 +4,10 @@ import google.generativeai as genai
 class F1KnowledgeBase:
     def __init__(self, user_login, api_key=""):
         self.user_login = user_login
-        self.API_KEY = api_key or os.getenv("GEMINI_API_KEY")
-        if self.API_KEY:
-            genai.configure(api_key=self.API_KEY)
+        self.API_KEY = api_key or os.getenv("API_KEY")  # Changed to match .env variable name
+        if not self.API_KEY:
+            raise ValueError("API_KEY environment variable is not set")
+        genai.configure(api_key=self.API_KEY)
         self.model = genai.GenerativeModel(
             model_name="gemini-1.5-pro",
             generation_config={
@@ -25,6 +26,11 @@ class F1KnowledgeBase:
             "output: ",
         ])
         return response.text
+
+    def text_to_image(self, text, image_path):
+        # Placeholder: Text-to-image generation is not supported by Gemini API
+        # You can integrate a different API (e.g., DALL-E, Stable Diffusion) here
+        raise NotImplementedError("Text-to-image generation is not implemented in this version")
 
 # Example usage
 if __name__ == "__main__":
